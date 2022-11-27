@@ -12,10 +12,9 @@ export const inventorySlice = createSlice({
     initialState,
     reducers: {
         addItemToStore: (state, action) => {
-            Object.assign(action.payload, {id: uuid()})
+            Object.assign(action.payload, {id: uuid(), inStore: true})
             // console.log(action);
             state.storeItems.push(action.payload)
-            // console.log(state.storeItems);
         },
         buyItem: (state, action) => {
             state.userItems.push(action.payload)
