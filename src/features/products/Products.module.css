@@ -1,6 +1,7 @@
 .cardContainer {
-    /* display: inline-block; */
     position: relative;
+    margin: 0.5em;
+    padding-bottom: 1em;
 }
 
 .buyItemBtn {
@@ -17,3 +18,6 @@
     display: flex;
 }
 
+.sell-btn {
+    margin-bottom: 1em;
+}
