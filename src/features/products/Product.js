@@ -4,7 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 //     // buyItem,
 //     // changeItemPrice,
 // } from './inventorySlice';
-import styles from '../counter/Counter.module.css';
+import styles from './Products.module.css';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 const selectTodoById = (state, itemId) => {
     // console.log(itemId);
@@ -13,8 +17,8 @@ const selectTodoById = (state, itemId) => {
 
 const Product = ({ itemId }) => {
     const item = useSelector(state => selectTodoById(state, itemId))
-    console.log(item);
-    const { id, name, price } = item
+    const { id, name, price, inStore } = item
+    // console.log(inStore);
 
     const dispatch = useDispatch();
     const [addItem, setAddItem] = useState({name: '', price: ''});
@@ -22,14 +26,30 @@ const Product = ({ itemId }) => {
     // const itemPrice = Number(addItem.price) || 0;
     // const handleInputChange = (key, value) => setAddItem({...addItem, [key]: value})
 
+    const buyItem = () => {
+
+    }
+
     return (
-        <div>
-            <div>{name}- {price}$</div>            
-            {/* <button className={styles.button} onClick={() => dispatch(addItemToStore(addItem))}>
-                Add Item To Store
-            </button> */}
-            
-        </div>
+        <Col>
+            <div className={styles.cardContainer} >
+                <Card>
+                    <h3>{name}</h3>  
+                    <div>Price: {price}$</div>          
+                    {/* <button className={styles.button} onClick={() => dispatch(addItemToStore(addItem))}>
+                        Add Item To Store
+                    </button> */}
+
+                    <div className={styles.btnContainer}>
+                        <button className={styles.buyItemBtn} onClick={(e) => 
+                            {
+                                buyItem()
+                                e.preventDefault();
+                            }}>{inStore ? "+" : "-"}</button>
+                    </div>
+                </Card>
+            </div>
+        </Col>
     )
 }
 
