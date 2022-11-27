@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {  createSlice } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 
 const initialState = {
@@ -12,26 +12,26 @@ export const inventorySlice = createSlice({
     initialState,
     reducers: {
         addItemToStore: (state, action) => {
-            Object.assign(action.payload, {id: uuid(), inStore: true})
-            // console.log(action);
+            Object.assign(action.payload, {id: uuid()})
             state.storeItems.push(action.payload)
         },
         buyItem: (state, action) => {
-            state.userItems.push(action.payload)
+            const itemId = action.payload
+            const item = state.storeItems.find(i => i.id === itemId)
+            item.stock = Number(item.stock) - 1
+        },
+        sellItem: (state, action) => {
+            const itemId = action.payload
+            const item = state.storeItems.find(i => i.id === itemId)
+            item.stock = Number(item.stock) + 1
         },
         changeItemPrice: (state, action) => {
-            // let copyItemToUpdate = {... state.storeItems.first(i => i.name == action.payload.name)}
-            // const copyStore = [... state.storeItems]
-            // let indexItemToUpdate = state.storeItems.findIndex(i => i.name == action.payload.name)
-            // let copyItemToUpdate = {... copyStore[indexItemToUpdate]}
-            // copyItemToUpdate.price = action.payload
-            // copyStore[indexItemToUpdate] = copyItemToUpdate
-            // state.storeItems = copyStore
+
         },
     }
 })
 
-export const { addItemToStore, buyItem, changeItemPrice } = inventorySlice.actions;
+export const { addItemToStore, buyItem, sellItem, changeItemPrice } = inventorySlice.actions;
 
 export const selectStoreItems = (state) => state.inventory.storeItems;
 export const selectUserItems = (state) => state.inventory.userItems;
