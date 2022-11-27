@@ -6,31 +6,42 @@ import {
     changeItemPrice,
     // selectStoreItems,
 } from './inventorySlice';
-import Product from '../products/Product'
 import styles from '../counter/Counter.module.css';
+import Products from '../products/Products'
 
 
 const selectItemsIds = state => state.inventory.storeItems.map(item => item.id)
 
 export function Inventory() {
     const storeItemsIds = useSelector(selectItemsIds);
-    console.log(storeItemsIds);
     const dispatch = useDispatch();
     const [addItem, setAddItem] = useState({name: '', price: ''});
 
     const handleInputChange = (key, value) => setAddItem({...addItem, [key]: value})
 
+    const handleClick = () => {
+        if(addItem.name != '' && addItem.price != '') {
+            dispatch(addItemToStore(addItem))
+            const reset = {name: '', price:''}
+            setAddItem(reset)
+        }
+        else {
+            alert('Please fill out all input forms to add an item!')
+        }
+    }
+
 
     return (
         <div>
-            <input className={styles.textbox} aria-label="Set add item name" value={addItem.name} name='name' onChange={e => handleInputChange(e.target.name, e.target.value)}/>
-            <input className={styles.textbox} aria-label="Set add item price" value={addItem.price} name='price' onChange={e => handleInputChange(e.target.name, e.target.value)}/>
+            <input className={styles.textbox} type='text' aria-label="Set add item name" value={addItem.name} name='name' onChange={e => handleInputChange(e.target.name, e.target.value)} placeholder='Item Name'/>
+            <input className={styles.textbox} type='number' aria-label="Set add item price" value={addItem.price} name='price' onChange={e => handleInputChange(e.target.name, e.target.value)} placeholder='Item Price'/>
             
-            <button className={styles.button} onClick={() => dispatch(addItemToStore(addItem))}>
-                Add Item To Store
+            <button className={styles.button} onClick={ handleClick }>
+                Add To Store
             </button>
 
-            {storeItemsIds.map((itemId,k) => <Product key={k} itemId={itemId} />)}
+            {/* {bought ? <BoughtItems /> : ''} */}
+            <Products/>
             
         </div>
     )
