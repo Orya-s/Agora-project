@@ -2,16 +2,19 @@
   text-align: center;
 }
 
-
-/* .App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-} */
-
 .App-link {
   color: rgb(112, 76, 182);
+}
+
+#background {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Side_State_Agora_4287.jpg/1280px-Side_State_Agora_4287.jpg);
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* opacity: 0.8; */
+  position: fixed;
+  z-index: -1;
+  background-attachment: fixed;
 }
