@@ -1,10 +1,8 @@
-import {  createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 
 const initialState = {
-    storeItems: [],
-    userItems: [],
-    status: 'idle',
+    storeItems: []
 };
 
 export const inventorySlice = createSlice({
@@ -26,7 +24,10 @@ export const inventorySlice = createSlice({
             item.stock = Number(item.stock) + 1
         },
         changeItemPrice: (state, action) => {
-
+            console.log(action);
+            const {price, id} = action.payload
+            const item = state.storeItems.find(i => i.id === id)
+            item.price = Number(price) 
         },
     }
 })
@@ -34,6 +35,5 @@ export const inventorySlice = createSlice({
 export const { addItemToStore, buyItem, sellItem, changeItemPrice } = inventorySlice.actions;
 
 export const selectStoreItems = (state) => state.inventory.storeItems;
-export const selectUserItems = (state) => state.inventory.userItems;
 
 export default inventorySlice.reducer;
