@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
     sellItem,
     buyItem,
-    // changeItemPrice,
+    changeItemPrice
 } from '../inventory/inventorySlice';
 import styles from './Products.module.css';
 import Col from 'react-bootstrap/Col';
@@ -20,25 +20,31 @@ const selectTodoById = (state, itemId) => {
 const Product = ({ itemId }) => {
     const item = useSelector(state => selectTodoById(state, itemId))
     const { id, name, price, stock } = item
+    const [newPrice, setNewPrice] = useState(price);
+    const [showPriceInput, setShowPriceInput] = useState(false);
 
     const dispatch = useDispatch();
 
-    // const handleInputChange = (key, value) => setAddItem({...addItem, [key]: value})
+    const handleInputChange = (e) => {
+        setNewPrice(e.target.value)
+        dispatch(changeItemPrice({price: e.target.value, id}))
+    }
 
     return (
         <Col>
             <div className={styles.cardContainer} >
-                <Card className="mx-auto my-2">
+                <Card> 
                     <CardBody>
                         <CardTitle><h4>{name}</h4></CardTitle>
-                        <div>Price: {price}$</div>  
+                        { showPriceInput ? 
+                        <input type='number' className={styles.priceInput} value={newPrice} onChange={e => handleInputChange(e)} onBlur={() => setShowPriceInput(false)} autoFocus></input> : 
+                        <div onDoubleClick={() => setShowPriceInput(true)}>Price: {price}$</div> }
                         <div>Stock: {stock}</div>          
-
-                        <div className={styles.btnContainer}>
-                            {stock > 0 ? <button onClick={() => { dispatch(buyItem(id))} }>Buy</button> : ""}
-                            <button className='sell-btn' onClick={() => { dispatch(sellItem(id))} }>Sell</button>
-                        </div>
                     </CardBody>
+                    <div className={styles.btnContainer}>
+                        {stock > 0 ? <button onClick={() => { dispatch(buyItem(id))} } className={styles.btn} >Buy</button> : ""}
+                        <button className={styles.btn} onClick={() => { dispatch(sellItem(id))} }>Sell</button>
+                    </div>
                 </Card>
             </div>
         </Col>
