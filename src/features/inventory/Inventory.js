@@ -5,7 +5,6 @@ import styles from './Inventory.module.css';
 import Products from '../products/Products'
 
 
-
 export function Inventory() {
     const dispatch = useDispatch();
     const [addItem, setAddItem] = useState({name: '', price: '', stock: ''});
@@ -19,7 +18,7 @@ export function Inventory() {
             setAddItem(reset)
         }
         else {
-            alert('Please fill out all input forms to add an item!')
+            alert('Please fill out all input fields to add an item!')
         }
     }
 
@@ -35,7 +34,6 @@ export function Inventory() {
             </button>
 
             <Products/>
-            
         </div>
     )
 }
